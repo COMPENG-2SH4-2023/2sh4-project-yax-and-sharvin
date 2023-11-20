@@ -1,0 +1,25 @@
+{
+  "files.associations": {
+    "*.env.*": "env",
+    "*.rh": "cpp",
+    "algorithm": "cpp",
+    "atomic": "cpp",
+    "charconv": "cpp",
+    "functional": "cpp",
+    "istream": "cpp",
+    "map": "cpp",
+    "memory": "cpp",
+    "mutex": "cpp",
+    "ostream": "cpp",
+    "ratio": "cpp",
+    "system_error": "cpp",
+    "vector": "cpp",
+    "xhash": "cpp",
+    "xlocale": "cpp",
+    "xlocbuf": "cpp",
+    "xlocmon": "cpp",
+    "xlocnum": "cpp",
+    "xstring": "cpp",
+    "xutility": "cpp"
+  }
+}

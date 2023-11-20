@@ -1,14 +1,12 @@
 #include "Player.h"
 
-
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs *thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
     // more actions to be included
 }
-
 
 Player::~Player()
 {
@@ -17,16 +15,16 @@ Player::~Player()
 
 void Player::getPlayerPos(objPos &returnPos)
 {
-    // return the reference to the playerPos arrray list
+    // return the reference to the playerPos array list
+    returnPos = playerPos;
 }
 
 void Player::updatePlayerDir()
 {
-    // PPA3 input processing logic        
+    // PPA3 input processing logic
 }
 
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
 }
-
