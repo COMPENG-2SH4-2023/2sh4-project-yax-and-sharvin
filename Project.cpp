@@ -2,6 +2,7 @@
 #include "MacUILib.h"
 #include "objPos.h"
 #include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -37,22 +38,21 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-    
+
     exitFlag = false;
 }
 
 void GetInput(void)
 {
-  // Asynchronous Input - non blocking character read-in
-  if (MacUILib_hasChar())
-  {
-    game.setInput(MacUILib_getChar());
-  }
+    // Asynchronous Input - non blocking character read-in
+    if (MacUILib_hasChar())
+    {
+        game.setInput(MacUILib_getChar());
+    }
 }
 
 void RunLogic(void)
 {
-    
 }
 
 void DrawScreen(void)

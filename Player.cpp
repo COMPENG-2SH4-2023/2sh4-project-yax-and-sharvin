@@ -6,6 +6,9 @@ Player::Player(GameMechs *thisGMRef)
     myDir = STOP;
 
     // more actions to be included
+    playerPos.x = 9;
+    playerPos.y = 9;
+    playerPos.symbol = '*';
 }
 
 Player::~Player()
