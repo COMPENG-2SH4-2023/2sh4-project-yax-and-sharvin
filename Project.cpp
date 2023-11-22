@@ -97,40 +97,33 @@ void DrawScreen(void)
             // top left corner
             if (i == 0 && j == 0)
             {
-                // printf("%c", 201);
                 cout << (char)201;
             }
             // top right corner
             else if (i == 0 && j == game.getBoardSizeX() - 1)
             {
-                // printf("%c", 187);
                 cout << (char)187;
             }
             // bottom left corner
             else if (i == game.getBoardSizeY() - 1 && j == 0)
             {
-                // printf("%c", 200);
                 cout << (char)200;
             }
             // bottom right corner
             else if (i == game.getBoardSizeY() - 1 && j == game.getBoardSizeX() - 1)
             {
-                // printf("%c", 188);
                 cout << (char)188;
             }
             else if (i == 0 || i == game.getBoardSizeY() - 1)
             {
-                // printf("%c", 205);
                 cout << (char)205;
             }
             else if (j == 0 || j == game.getBoardSizeX() - 1)
             {
-                // printf("%c", 186);
                 cout << (char)186;
             }
             else if (playerPos.x == j && playerPos.y == i)
             {
-                // printf("%c", playerPos.getSymbol());
                 cout << playerPos.getSymbol();
             }
             else
