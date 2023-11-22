@@ -71,6 +71,7 @@ void objPosArrayList::removeTail()
 
     if (sizeList > 0)
     {
+        // degrements the size
         sizeList--;
     }
 }
@@ -90,7 +91,7 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 
     if (sizeList > 0)
     {
-
+        // returns the last element within the list
         returnPos = aList[sizeList - 1];
     }
 }
@@ -100,6 +101,7 @@ void objPosArrayList::getElement(objPos &returnPos, int index)
 
     if (sizeList > 0)
     {
+        // return the specified index value
         returnPos = aList[index];
     }
 }
