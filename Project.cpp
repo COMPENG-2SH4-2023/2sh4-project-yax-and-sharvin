@@ -8,8 +8,7 @@ using namespace std;
 
 #define DELAY_CONST 100000
 
-bool exitFlag;
-GameMechs game = GameMechs();
+GameMechs game = GameMechs(20, 10);
 Player player = Player(&game);
 
 void Initialize(void);
@@ -23,7 +22,7 @@ int main(void)
 {
     Initialize();
 
-    while (exitFlag == false)
+    while (game.getExitFlagStatus() == false)
     {
         GetInput();
         RunLogic();
@@ -38,8 +37,6 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
-
-    exitFlag = false;
 }
 
 void GetInput(void)
@@ -53,11 +50,103 @@ void GetInput(void)
 
 void RunLogic(void)
 {
+
+    if (game.getInput() != 0) // if not null character
+    {
+        player.updatePlayerDir();
+
+        game.clearInput();
+    }
+
+    player.updatePlayerPos();
 }
 
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
+
+    //  Draw game instructions
+    printf("WASD to move, space to exit\n\n");
+
+    //  2. Iterate through each character location on the game board
+    //     using the nested for-loop row-scanning setup.
+    int i, j;
+    for (i = 0; i < game.getBoardSizeY(); i++)
+    {
+        for (j = 0; j < game.getBoardSizeX(); j++)
+        {
+            // print character from list
+            /*int k, t = 0;
+            for (k = 0; k < 5; k++)
+            {
+                if (list[k].x == j && list[k].y == i)
+                {
+                    MacUILib_printf("%c", list[k].symbol);
+                    t = 1;
+                    break;
+                }
+            }
+            if (t == 1)
+            {
+                continue;
+            }*/
+
+            objPos playerPos;
+            player.getPlayerPos(playerPos);
+
+            // top left corner
+            if (i == 0 && j == 0)
+            {
+                // printf("%c", 201);
+                cout << (char)201;
+            }
+            // top right corner
+            else if (i == 0 && j == game.getBoardSizeX() - 1)
+            {
+                // printf("%c", 187);
+                cout << (char)187;
+            }
+            // bottom left corner
+            else if (i == game.getBoardSizeY() - 1 && j == 0)
+            {
+                // printf("%c", 200);
+                cout << (char)200;
+            }
+            // bottom right corner
+            else if (i == game.getBoardSizeY() - 1 && j == game.getBoardSizeX() - 1)
+            {
+                // printf("%c", 188);
+                cout << (char)188;
+            }
+            else if (i == 0 || i == game.getBoardSizeY() - 1)
+            {
+                // printf("%c", 205);
+                cout << (char)205;
+            }
+            else if (j == 0 || j == game.getBoardSizeX() - 1)
+            {
+                // printf("%c", 186);
+                cout << (char)186;
+            }
+            else if (playerPos.x == j && playerPos.y == i)
+            {
+                // printf("%c", playerPos.getSymbol());
+                cout << playerPos.getSymbol();
+            }
+            else
+            {
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+
+    // cout << "\nMystery String: " << mysteryString << endl;
+
+    // print current position
+    objPos playerPos;
+    player.getPlayerPos(playerPos);
+    cout << "Current Position: " << playerPos.x << ", " << playerPos.y << endl;
 }
 
 void LoopDelay(void)

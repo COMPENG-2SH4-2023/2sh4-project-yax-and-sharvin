@@ -25,10 +25,15 @@ public:
 
     Player(GameMechs *thisGMRef);
     ~Player();
+    // copy constructor
+    Player(const Player &player);
 
     void getPlayerPos(objPos &returnPos); // Upgrade this in iteration 3.
     void updatePlayerDir();
+    void updatePlayerPos();
     void movePlayer();
+
+    Dir getDir();
 
 private:
     objPos playerPos; // Upgrade this in iteration 3.
@@ -36,6 +41,8 @@ private:
 
     // Need a reference to the Main Game Mechanisms
     GameMechs *mainGameMechsRef;
+
+    void setDir(Dir thisDir);
 };
 
 #endif
