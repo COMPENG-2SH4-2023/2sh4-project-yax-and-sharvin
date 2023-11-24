@@ -8,7 +8,7 @@ using namespace std;
 
 #define DELAY_CONST 100000
 
-GameMechs game = GameMechs(20, 10);
+GameMechs game(20, 10);
 Player player = Player(&game);
 
 void Initialize(void);
@@ -21,7 +21,7 @@ void CleanUp(void);
 int main(void)
 {
     Initialize();
-
+    srand(static_cast<unsigned>(time(nullptr)));
     while (game.getExitFlagStatus() == false)
     {
         GetInput();
@@ -37,6 +37,8 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
+    objPos blockOff; // Assuming you have a specific position to block
+    game.generateFood(blockOff);
 }
 
 void GetInput(void)
@@ -94,6 +96,9 @@ void DrawScreen(void)
             objPos playerPos;
             player.getPlayerPos(playerPos);
 
+            objPos foodPos;
+            game.getFoodPos(foodPos);
+
             // top left corner
             if (i == 0 && j == 0)
             {
@@ -122,6 +127,10 @@ void DrawScreen(void)
             {
                 cout << (char)186;
             }
+            else if (foodPos.x == j && foodPos.y == i)
+            {
+                cout << foodPos.symbol;
+            }
             else if (playerPos.x == j && playerPos.y == i)
             {
                 cout << playerPos.getSymbol();
@@ -139,7 +148,11 @@ void DrawScreen(void)
     // print current position
     objPos playerPos;
     player.getPlayerPos(playerPos);
+
+    objPos foodPos;
+    game.getFoodPos(foodPos);
     cout << "Current Position: " << playerPos.x << ", " << playerPos.y << endl;
+    cout << "Current food pos: " << foodPos.x << ", " << foodPos.y << endl;
 }
 
 void LoopDelay(void)
