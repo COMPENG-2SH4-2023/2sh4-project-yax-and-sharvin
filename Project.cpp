@@ -57,6 +57,16 @@ void RunLogic(void)
     {
         player.updatePlayerDir();
 
+        if (game.getInput() == 'l')
+        {
+            game.setExitTrue();
+        }
+
+        if (game.getInput() == 'i')
+        {
+            game.incrementScore();
+        }
+
         game.clearInput();
     }
 
@@ -93,8 +103,8 @@ void DrawScreen(void)
                 continue;
             }*/
 
-            objPos playerPos;
-            player.getPlayerPos(playerPos);
+            objPosArrayList playerPosList;
+            player.getPlayerPos(playerPosList);
 
             objPos foodPos;
             game.getFoodPos(foodPos);
@@ -103,42 +113,49 @@ void DrawScreen(void)
             if (i == 0 && j == 0)
             {
                 cout << (char)201;
+                continue;
             }
             // top right corner
             else if (i == 0 && j == game.getBoardSizeX() - 1)
             {
                 cout << (char)187;
+                continue;
             }
             // bottom left corner
             else if (i == game.getBoardSizeY() - 1 && j == 0)
             {
                 cout << (char)200;
+                continue;
             }
             // bottom right corner
             else if (i == game.getBoardSizeY() - 1 && j == game.getBoardSizeX() - 1)
             {
                 cout << (char)188;
+                continue;
             }
             else if (i == 0 || i == game.getBoardSizeY() - 1)
             {
                 cout << (char)205;
+                continue;
             }
             else if (j == 0 || j == game.getBoardSizeX() - 1)
             {
                 cout << (char)186;
+                continue;
             }
             else if (foodPos.x == j && foodPos.y == i)
             {
                 cout << foodPos.symbol;
-            }
-            else if (playerPos.x == j && playerPos.y == i)
-            {
-                cout << playerPos.getSymbol();
+                continue;
             }
             else
             {
-                printf(" ");
+                
+                // cout << playerPos.getSymbol();
             }
+
+
+            printf(" ");
         }
         printf("\n");
     }
@@ -146,13 +163,16 @@ void DrawScreen(void)
     // cout << "\nMystery String: " << mysteryString << endl;
 
     // print current position
-    objPos playerPos;
-    player.getPlayerPos(playerPos);
+    // objPos playerPos;
+    // player.getPlayerPos(playerPos);
+    // cout << "Current Position: " << playerPos.x << ", " << playerPos.y << endl;
 
     objPos foodPos;
     game.getFoodPos(foodPos);
-    cout << "Current Position: " << playerPos.x << ", " << playerPos.y << endl;
     cout << "Current food pos: " << foodPos.x << ", " << foodPos.y << endl;
+
+    // print score
+    cout << "Score: " << game.getScore() << endl;
 }
 
 void LoopDelay(void)

@@ -28,7 +28,7 @@ public:
     // copy constructor
     Player(const Player &player);
 
-    void getPlayerPos(objPos &returnPos); // Upgrade this in iteration 3.
+    void getPlayerPos(objPosArrayList &returnPosList); // Upgrade this in iteration 3.
     void updatePlayerDir();
     void updatePlayerPos();
     void movePlayer();
@@ -43,6 +43,8 @@ private:
     GameMechs *mainGameMechsRef;
 
     void setDir(Dir thisDir);
+
+    objPosArrayList* playerPosList;
 };
 
 #endif

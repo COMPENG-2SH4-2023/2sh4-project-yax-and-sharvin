@@ -11,9 +11,11 @@ GameMechs::GameMechs()
 GameMechs::GameMechs(int boardX, int boardY)
 {
   exitFlag = false;
+  loseFlag = false;
   boardSizeX = boardX;
   boardSizeY = boardY;
   input = 0;
+  score = 0;
   srand(static_cast<unsigned>(time(nullptr)));
 }
 
@@ -24,9 +26,24 @@ bool GameMechs::getExitFlagStatus()
   return exitFlag;
 }
 
+bool GameMechs::getLoseFlagStatus()
+{
+  return loseFlag;
+}
+
 char GameMechs::getInput()
 {
   return input;
+}
+
+void GameMechs::incrementScore()
+{
+  score++;
+}
+
+int GameMechs::getScore()
+{
+  return score;
 }
 
 int GameMechs::getBoardSizeX()
@@ -42,6 +59,11 @@ int GameMechs::getBoardSizeY()
 void GameMechs::setExitTrue()
 {
   exitFlag = true;
+}
+
+void GameMechs::setLoseTrue()
+{
+  loseFlag = true;
 }
 
 void GameMechs::setInput(char this_input)

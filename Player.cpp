@@ -10,6 +10,8 @@ Player::Player(GameMechs *thisGMRef)
     playerPos.x = 9;
     playerPos.y = 9;
     playerPos.symbol = '*';
+
+    playerPosList = new objPosArrayList();
 }
 
 Player::~Player()
@@ -25,10 +27,10 @@ Player::Player(const Player &player)
     playerPos = player.playerPos;
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+void Player::getPlayerPos(objPosArrayList &returnPosList)
 {
-    // return the reference to the playerPos array list
-    returnPos = playerPos;
+    // deferenece the pointer
+    returnPosList = *playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -77,7 +79,6 @@ void Player::updatePlayerDir()
 
 void Player::updatePlayerPos()
 {
-
     int newX = playerPos.x;
     int newY = playerPos.y;
 
@@ -131,7 +132,13 @@ void Player::updatePlayerPos()
     newPlayerPos.y = newY;
     newPlayerPos.symbol = playerPos.getSymbol();
 
-    playerPos.setObjPos(newPlayerPos);
+    // playerPos.setObjPos(newPlayerPos);
+
+
+    playerPosList->insertHead(newPlayerPos);
+
+    // remove last element
+    playerPosList->removeTail();
 }
 
 void Player::movePlayer()
