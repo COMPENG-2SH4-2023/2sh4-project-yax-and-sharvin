@@ -6,17 +6,15 @@ Player::Player(GameMechs *thisGMRef)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
-    // more actions to be included
-    playerPos.x = 9;
-    playerPos.y = 9;
-    playerPos.symbol = '*';
-
     playerPosList = new objPosArrayList();
+
+    playerPos = objPos(mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '@');
+    playerPosList->insertTail(playerPos);
 }
 
 Player::~Player()
 {
-    // delete any heap members here
+    delete playerPosList;
 }
 
 Player::Player(const Player &player)
@@ -27,45 +25,63 @@ Player::Player(const Player &player)
     playerPos = player.playerPos;
 }
 
-void Player::getPlayerPos(objPosArrayList &returnPosList)
+void Player::getPlayerPos(objPos &returnPos)
 {
-    // deferenece the pointer
-    returnPosList = *playerPosList;
+    returnPos = playerPos;
+}
+
+objPosArrayList *Player::getPlayerPosList()
+{
+    return playerPosList;
 }
 
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
 
-    switch (mainGameMechsRef->getInput())
+    char input = mainGameMechsRef->getInput();
+
+    if (input == 0)
+    {
+        return;
+    }
+
+    switch (input)
     {
     case ' ': // exit
         mainGameMechsRef->setExitTrue();
         break;
 
-        // DIRECTION CONTROL
-    case 'w': // up
+        // up
+    case 'W':
+    case 'w':
         if (getDir() != Player::DOWN)
         {
             setDir(Player::UP);
         };
         break;
 
-    case 's': // down
+        // down
+    case 'S':
+    case 's':
         if (getDir() != Player::UP)
         {
             setDir(Player::DOWN);
         };
         break;
 
-    case 'a': // left
+        // left
+    case 'A':
+    case 'a':
         if (getDir() != Player::RIGHT)
         {
             setDir(Player::LEFT);
         };
         break;
 
-    case 'd': // right
+        // right
+    case 'D':
+    case 'd':
         if (getDir() != Player::LEFT)
         {
             setDir(Player::RIGHT);
@@ -77,10 +93,10 @@ void Player::updatePlayerDir()
     }
 }
 
-void Player::updatePlayerPos()
+void Player::movePlayer()
 {
-    int newX = playerPos.x;
-    int newY = playerPos.y;
+    objPos head;
+    playerPosList->getHeadElement(head);
 
     // update the player location
     if (getDir() != STOP)
@@ -89,19 +105,19 @@ void Player::updatePlayerPos()
         switch (getDir())
         {
         case UP:
-            newY--;
+            head.y--;
             break;
 
         case DOWN:
-            newY++;
+            head.y++;
             break;
 
         case LEFT:
-            newX--;
+            head.x--;
             break;
 
         case RIGHT:
-            newX++;
+            head.x++;
             break;
 
         default:
@@ -110,40 +126,41 @@ void Player::updatePlayerPos()
     }
 
     // border wraparound
-    if (newX <= 0)
+    if (head.x <= 0)
     {
-        newX = mainGameMechsRef->getBoardSizeX() - 2;
+        head.x = mainGameMechsRef->getBoardSizeX() - 2;
     }
-    else if (newX >= mainGameMechsRef->getBoardSizeX() - 1)
+    else if (head.x >= mainGameMechsRef->getBoardSizeX() - 1)
     {
-        newX = 1;
+        head.x = 1;
     }
-    else if (newY <= 0)
+    else if (head.y <= 0)
     {
-        newY = mainGameMechsRef->getBoardSizeY() - 2;
+        head.y = mainGameMechsRef->getBoardSizeY() - 2;
     }
-    else if (newY >= mainGameMechsRef->getBoardSizeY() - 1)
+    else if (head.y >= mainGameMechsRef->getBoardSizeY() - 1)
     {
-        newY = 1;
+        head.y = 1;
     }
 
-    objPos newPlayerPos;
-    newPlayerPos.x = newX;
-    newPlayerPos.y = newY;
-    newPlayerPos.symbol = playerPos.getSymbol();
+    playerPosList->insertHead(head);
 
-    // playerPos.setObjPos(newPlayerPos);
+    // check if player is touching the food
+    objPos foodPos;
+    mainGameMechsRef->getFoodPos(foodPos);
 
+    if (foodPos.isPosEqual(&head))
+    {
+        mainGameMechsRef->incrementScore();
 
-    playerPosList->insertHead(newPlayerPos);
-
-    // remove last element
-    playerPosList->removeTail();
-}
-
-void Player::movePlayer()
-{
-    // PPA3 Finite State Machine logic
+        // generate new food
+        mainGameMechsRef->generateFood(head);
+    }
+    else
+    {
+        // remove last element
+        playerPosList->removeTail();
+    }
 }
 
 Player::Dir Player::getDir()

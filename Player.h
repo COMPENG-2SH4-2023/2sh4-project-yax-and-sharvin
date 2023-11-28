@@ -28,9 +28,9 @@ public:
     // copy constructor
     Player(const Player &player);
 
-    void getPlayerPos(objPosArrayList &returnPosList); // Upgrade this in iteration 3.
+    void getPlayerPos(objPos &returnPos); // Upgrade this in iteration 3.
+    objPosArrayList *getPlayerPosList();
     void updatePlayerDir();
-    void updatePlayerPos();
     void movePlayer();
 
     Dir getDir();
@@ -44,7 +44,7 @@ private:
 
     void setDir(Dir thisDir);
 
-    objPosArrayList* playerPosList;
+    objPosArrayList *playerPosList;
 };
 
 #endif

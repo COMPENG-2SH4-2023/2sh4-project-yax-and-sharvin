@@ -1,4 +1,5 @@
 #include "GameMechs.h"
+#include "MacUILib.h"
 
 GameMechs::GameMechs()
 {
@@ -33,6 +34,10 @@ bool GameMechs::getLoseFlagStatus()
 
 char GameMechs::getInput()
 {
+  if (MacUILib_hasChar() != 0)
+  {
+    input = MacUILib_getChar();
+  }
   return input;
 }
 
@@ -78,13 +83,13 @@ void GameMechs::clearInput()
 
 void GameMechs::generateFood(objPos blockOff)
 {
-
   // Ensure the generated position is not the same as blockOff
-  while ((foodPos.x == blockOff.x && foodPos.y == blockOff.y) || (foodPos.x == 0 && foodPos.y == 0))
+  do
   {
-    foodPos.x = 1 + rand() % (boardSizeX - 2);
-    foodPos.y = 1 + rand() % (boardSizeY - 2);
-  }
+    foodPos.x = rand() % (boardSizeX - 2) + 1;
+    foodPos.y = rand() % (boardSizeY - 2) + 1;
+
+  } while (foodPos.x == blockOff.x && foodPos.y == blockOff.y);
 
   foodPos.symbol = '0';
 }
