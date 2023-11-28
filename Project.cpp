@@ -41,10 +41,9 @@ void Initialize(void)
     objPos pos;
     player->getPlayerPos(pos);
 
-    objPosArrayList playerPosList;
     player->getPlayerPosList();
 
-    game->generateFood(pos);
+    game->generateFood(player->getPlayerPosList());
 
     srand(time(NULL));
 
@@ -77,9 +76,7 @@ void RunLogic(void)
 
         if (game->getInput() == 'r')
         {
-            objPos playerHead;
-            player->getPlayerPos(playerHead);
-            game->generateFood(playerHead);
+            game->generateFood(player->getPlayerPosList());
 
             objPos foodPos;
             game->getFoodPos(foodPos);
@@ -199,6 +196,12 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();
+
+    if (game->getLoseFlagStatus())
+    {
+        MacUILib_printf("You lose!\n");
+    }
+    MacUILib_printf("You scored %d points!\n", game->getScore());
 
     MacUILib_uninit();
 }

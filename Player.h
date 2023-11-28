@@ -33,6 +33,8 @@ public:
     void updatePlayerDir();
     void movePlayer();
 
+    bool checkSelfCollision();
+
     Dir getDir();
 
 private:

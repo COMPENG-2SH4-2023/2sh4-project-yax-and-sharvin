@@ -154,18 +154,44 @@ void Player::movePlayer()
         mainGameMechsRef->incrementScore();
 
         // generate new food
-        mainGameMechsRef->generateFood(head);
+        mainGameMechsRef->generateFood(playerPosList);
     }
     else
     {
         // remove last element
         playerPosList->removeTail();
     }
+
+    if (checkSelfCollision())
+    {
+        mainGameMechsRef->setExitTrue();
+        mainGameMechsRef->setLoseFlag();
+    }
 }
 
 Player::Dir Player::getDir()
 {
     return myDir;
+}
+
+bool Player::checkSelfCollision()
+{
+    objPos head;
+    playerPosList->getHeadElement(head);
+
+    for (int i = 1; i < playerPosList->getSize(); i++)
+    {
+
+        objPos segment;
+        playerPosList->getElement(segment, i);
+
+        if (head.isPosEqual(&segment))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void Player::setDir(Dir thisDir)

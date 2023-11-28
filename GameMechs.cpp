@@ -66,7 +66,7 @@ void GameMechs::setExitTrue()
   exitFlag = true;
 }
 
-void GameMechs::setLoseTrue()
+void GameMechs::setLoseFlag()
 {
   loseFlag = true;
 }
@@ -81,17 +81,40 @@ void GameMechs::clearInput()
   input = 0;
 }
 
-void GameMechs::generateFood(objPos blockOff)
+void GameMechs::generateFood(objPosArrayList *blockOff)
 {
+  // make sure that there is space for food to be generated
+  if (blockOff->getSize() >= (boardSizeX - 2) * (boardSizeY - 2))
+  {
+    setExitTrue();
+    return;
+  }
+
   // Ensure the generated position is not the same as blockOff
-  do
+  while (true)
   {
     foodPos.x = rand() % (boardSizeX - 2) + 1;
     foodPos.y = rand() % (boardSizeY - 2) + 1;
+    foodPos.symbol = '0';
 
-  } while (foodPos.x == blockOff.x && foodPos.y == blockOff.y);
+    bool hitFlag = false;
+    for (int i = 0; i < blockOff->getSize(); i++)
+    {
+      objPos pos;
+      blockOff->getElement(pos, i);
 
-  foodPos.symbol = '0';
+      if (foodPos.x == pos.x && foodPos.y == pos.y)
+      {
+        hitFlag = true;
+        break;
+      }
+    }
+
+    if (!hitFlag)
+    {
+      break;
+    }
+  }
 }
 
 void GameMechs::getFoodPos(objPos &returnPos)

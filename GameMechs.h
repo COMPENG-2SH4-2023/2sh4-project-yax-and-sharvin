@@ -36,7 +36,7 @@ public:
     bool getExitFlagStatus();
     bool getLoseFlagStatus();
     void setExitTrue();
-    void setLoseTrue();
+    void setLoseFlag();
 
     char getInput();
     void setInput(char this_input);
@@ -47,7 +47,7 @@ public:
     int getBoardSizeX();
     int getBoardSizeY();
 
-    void generateFood(objPos blockOff);
+    void generateFood(objPosArrayList *blockOff);
     void getFoodPos(objPos &returnPos);
 };
 
