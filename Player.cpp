@@ -3,6 +3,7 @@
 
 Player::Player(GameMechs *thisGMRef)
 {
+    // initalize the player object based on the game board
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
@@ -171,14 +172,17 @@ void Player::movePlayer()
 
 Player::Dir Player::getDir()
 {
+    // returns the direction
     return myDir;
 }
 
 bool Player::checkSelfCollision()
 {
+
     objPos head;
     playerPosList->getHeadElement(head);
 
+    // check to see within all of the elements in the list has overlapped
     for (int i = 1; i < playerPosList->getSize(); i++)
     {
 
@@ -196,5 +200,6 @@ bool Player::checkSelfCollision()
 
 void Player::setDir(Dir thisDir)
 {
+    // set the player direction to the passed in perameters
     myDir = thisDir;
 }

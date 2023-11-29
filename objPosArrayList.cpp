@@ -24,9 +24,8 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    std::cout << sizeList << std::endl;
-    std::cout << sizeArray << std::endl;
-
+    // std::cout << sizeList << std::endl;
+    // std::cout << sizeArray << std::endl;
 
     if (sizeList < sizeArray)
     {

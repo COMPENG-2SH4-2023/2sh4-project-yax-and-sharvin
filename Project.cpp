@@ -35,6 +35,7 @@ int main(void)
 
 void Initialize(void)
 {
+    // generate player, board and food
     game = new GameMechs(30, 15);
     player = new Player(game);
 
@@ -144,6 +145,7 @@ void DrawScreen(void)
                 continue;
             }
 
+            // intersects the food position
             else if (foodPos.x == j && foodPos.y == i)
             {
                 MacUILib_printf("%c", foodPos.symbol);
@@ -151,6 +153,7 @@ void DrawScreen(void)
             }
             else
             {
+                // move the player accordingly
                 bool isPlayer = false;
                 for (int k = 0; k < playerPosList->getSize(); k++)
                 {
@@ -180,9 +183,11 @@ void DrawScreen(void)
     // print current position
     objPos playerPos;
     playerPosList->getHeadElement(playerPos);
-    cout << "Current Position: " << playerPos.x << ", " << playerPos.y << endl;
 
-    cout << "Current food pos: " << foodPos.x << ", " << foodPos.y << endl;
+    // test purpose code to show player pos and food pos
+    // cout << "Current Position: " << playerPos.x << ", " << playerPos.y << endl;
+
+    // cout << "Current food pos: " << foodPos.x << ", " << foodPos.y << endl;
 
     // print score
     cout << "Score: " << game->getScore() << endl;
