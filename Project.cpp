@@ -54,6 +54,7 @@ void Initialize(void)
 
 void GetInput(void)
 {
+    // get input
     char input = game->getInput();
     game->setInput(input);
 }
@@ -63,7 +64,8 @@ void RunLogic(void)
     player->updatePlayerDir();
     player->movePlayer();
 
-    if (game->getInput() != 0) // if not null character
+    // if not null character
+    if (game->getInput() != 0)
     {
         if (game->getInput() == 'l')
         {
@@ -178,19 +180,12 @@ void DrawScreen(void)
         printf("\n");
     }
 
-    // cout << "\nMystery String: " << mysteryString << endl;
-
     // print current position
     objPos playerPos;
     playerPosList->getHeadElement(playerPos);
 
-    // test purpose code to show player pos and food pos
-    // cout << "Current Position: " << playerPos.x << ", " << playerPos.y << endl;
-
-    // cout << "Current food pos: " << foodPos.x << ", " << foodPos.y << endl;
-
     // print score
-    cout << "Score: " << game->getScore() << endl;
+    MacUILib_printf("Score: %d\n", game->getScore());
 }
 
 void LoopDelay(void)
@@ -206,6 +201,11 @@ void CleanUp(void)
     {
         MacUILib_printf("You lose!\n");
     }
+
+    // free up memory
+    delete game;
+    delete player;
+
     MacUILib_printf("You scored %d points!\n", game->getScore());
 
     MacUILib_uninit();

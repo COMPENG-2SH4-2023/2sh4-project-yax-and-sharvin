@@ -20,8 +20,6 @@ GameMechs::GameMechs(int boardX, int boardY)
   srand(static_cast<unsigned>(time(nullptr)));
 }
 
-// do you need a destructor?
-
 bool GameMechs::getExitFlagStatus()
 {
   return exitFlag;
@@ -95,7 +93,7 @@ void GameMechs::generateFood(objPosArrayList *blockOff)
   {
     foodPos.x = rand() % (boardSizeX - 2) + 1;
     foodPos.y = rand() % (boardSizeY - 2) + 1;
-    foodPos.symbol = '0';
+    foodPos.symbol = 'X';
 
     bool hitFlag = false;
     for (int i = 0; i < blockOff->getSize(); i++)

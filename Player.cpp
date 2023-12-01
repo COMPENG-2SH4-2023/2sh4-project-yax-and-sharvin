@@ -3,12 +3,14 @@
 
 Player::Player(GameMechs *thisGMRef)
 {
-    // initalize the player object based on the game board
+    // initialize the player object based on the game board
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
+    // initialize the player position list
     playerPosList = new objPosArrayList();
 
+    // initialize the player position to the center of the board
     playerPos = objPos(mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '@');
     playerPosList->insertTail(playerPos);
 }
@@ -38,22 +40,24 @@ objPosArrayList *Player::getPlayerPosList()
 
 void Player::updatePlayerDir()
 {
-    // PPA3 input processing logic
-
+    // get the input
     char input = mainGameMechsRef->getInput();
 
+    // if null character, do nothing
     if (input == 0)
     {
         return;
     }
 
+    // otherwise, check the input
     switch (input)
     {
-    case ' ': // exit
+    // exit
+    case ' ':
         mainGameMechsRef->setExitTrue();
         break;
 
-        // up
+    // up
     case 'W':
     case 'w':
         if (getDir() != Player::DOWN)
@@ -62,7 +66,7 @@ void Player::updatePlayerDir()
         };
         break;
 
-        // down
+    // down
     case 'S':
     case 's':
         if (getDir() != Player::UP)
@@ -71,7 +75,7 @@ void Player::updatePlayerDir()
         };
         break;
 
-        // left
+    // left
     case 'A':
     case 'a':
         if (getDir() != Player::RIGHT)
@@ -80,7 +84,7 @@ void Player::updatePlayerDir()
         };
         break;
 
-        // right
+    // right
     case 'D':
     case 'd':
         if (getDir() != Player::LEFT)
@@ -102,7 +106,6 @@ void Player::movePlayer()
     // update the player location
     if (getDir() != STOP)
     {
-
         switch (getDir())
         {
         case UP:
@@ -144,14 +147,17 @@ void Player::movePlayer()
         head.y = 1;
     }
 
+    // add the new head position to the list
     playerPosList->insertHead(head);
 
     // check if player is touching the food
     objPos foodPos;
     mainGameMechsRef->getFoodPos(foodPos);
 
+    // dont delete the tail if the player is touching the food
     if (foodPos.isPosEqual(&head))
     {
+        // increment the score
         mainGameMechsRef->incrementScore();
 
         // generate new food
@@ -163,6 +169,7 @@ void Player::movePlayer()
         playerPosList->removeTail();
     }
 
+    // check if player is touching itself
     if (checkSelfCollision())
     {
         mainGameMechsRef->setExitTrue();
@@ -172,13 +179,11 @@ void Player::movePlayer()
 
 Player::Dir Player::getDir()
 {
-    // returns the direction
     return myDir;
 }
 
 bool Player::checkSelfCollision()
 {
-
     objPos head;
     playerPosList->getHeadElement(head);
 
