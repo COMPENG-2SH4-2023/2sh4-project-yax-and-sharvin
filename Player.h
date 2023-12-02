@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "GameMechs.h"
+#include "Food.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
 
@@ -23,7 +24,7 @@ public:
         STOP
     }; // This is the direction state
 
-    Player(GameMechs *thisGMRef);
+    Player(GameMechs *thisGMRef, Food *thisFoodRef);
     ~Player();
     // copy constructor
     Player(const Player &player);
@@ -43,6 +44,7 @@ private:
 
     // Need a reference to the Main Game Mechanisms
     GameMechs *mainGameMechsRef;
+    Food *foodRef;
 
     void setDir(Dir thisDir);
 
